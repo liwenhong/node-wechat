@@ -7,8 +7,21 @@ const express = require('express'), //引入express框架
 var app = new express();
 var wechatApp = new wechat(config); //实例wechat对象
 
+//设置跨域访问
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://192.168.1.200:8080");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Credentials", 'true');
+    res.header("X-Powered-By",' 3.2.1');
+    res.header("Content-Type", "application/x-www-form-urlencoded");
+    next();
+ });
 app.get('/', function (req, res) {
     wechatApp.auth(req,res);
+})
+app.get('/test', function (req, res) {
+   res.send('这个是test方法')
 })
 app.get('/getAccessToken',function(req,res){
     wechatApp.getAccessToken().then(function(data){
@@ -26,4 +39,9 @@ app.get('/createMenus',function(req,res){
 app.post('/',function(req,res){
   wechatApp.handleMsg(req,res);
 });
+
+app.post('/testP',function(req,res){
+    console.log(req.query);
+    
+})
 app.listen(8090);
