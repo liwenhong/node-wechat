@@ -1,0 +1,19 @@
+{
+  "name": "wechat-node",
+  "version": "1.0.0",
+  "description": "A wechat-node project",
+  "author": "李文洪 <784327282@qq.com>",
+  "private": true,
+  "devDependencies": {
+    "xml2js": "^0.4.19"
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
