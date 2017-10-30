@@ -2,11 +2,13 @@ const express = require('express'), //引入express框架
     crypto = require('crypto'), //引入加密模块
     config = require('./config'),//引入配置文件
     wechat = require('./wechat/wechat'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    dbSql = require('./db/dbConfig');
 
 //实例化express
 var app = new express();
 var wechatApp = new wechat(config); //实例wechat对象
+var db = new dbSql();//实例数据库对象
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //设置跨域访问
@@ -23,9 +25,15 @@ app.get('/', function (req, res) {
     wechatApp.auth(req, res);
 })
 app.get('/test', function (req, res) {
-    console.log(req.query.name)
-    console.log(req.query)
-    res.send('这个是test方法')
+    console.log(req.query.sqlString)
+    let sqlStr = req.query.sqlString;
+    db.query(sqlStr).then((data)=>{
+        console.log(data);
+        res.send(data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+    
 })
 app.get('/getAccessToken', function (req, res) {
     wechatApp.getAccessToken().then(function (data) {

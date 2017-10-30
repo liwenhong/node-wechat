@@ -5,6 +5,7 @@
   "author": "李文洪 <784327282@qq.com>",
   "private": true,
   "devDependencies": {
+    "mysql": "^2.15.0",
     "xml2js": "^0.4.19"
   },
   "engines": {
